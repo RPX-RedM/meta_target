@@ -1,3 +1,5 @@
+---@diagnostic disable: redundant-parameter
+
 local exportPrefix = 'fivem-target'
 
 local function getExportEventName(name)

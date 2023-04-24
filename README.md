@@ -1,8 +1,16 @@
 # meta_target
 
-## Release
+## ⚠️ Pre-Release ⚠️
+This resource has lacked extensive testing.  
+Development and bug-fixing will be continued, however all features may not work correctly.  
 Please report bugs, incorrect readme instructions/examples, or any other issue you might find, right here on github issues.  
 You can also post any missing features from other targetting resources that you would like added through github issues.
+
+## Installation:  
+Download the latest release of `meta_target`.  
+Add the `meta_target` resource to your `resources` folder, and add `start meta_target` to your server.cfg.  
+Alternatively, calling the export by the same name works.  
+Ensure [PolyZone](https://github.com/mkafrin/PolyZone) is installed.
 
 ## Referencing:
 
@@ -137,6 +145,84 @@ anything    - any                 (literally any other data you want to pass thr
 ```
 
 ## Example use:
+
+### point
+```lua
+  -- NOTE: This example uses a single event callback for the entire target
+
+  AddEventHandler('myscript:onInteract',function(targetData,itemData)
+    print(targetData.name,targetData.label) --> my_shop_target  Shop
+    print(itemData.name,itemData.label)     --> open_shop       Open Shop
+  end)
+
+  target.addPoint('my_shop_target', 'Shop', 'fas fa-home', vector3(123.4,456.7,789.0), 10.0, 'myscript:onInteract', {
+    {
+      name = 'open_shop',
+      label = 'Open Shop'
+    }
+  },{
+    foo = 'bar'
+  })
+```
+
+### model
+```lua
+  -- NOTE: This example uses a single function callback for the entire target
+
+  function onInteract(targetData,itemData)
+    print(targetData.name,targetData.label) --> my_buffalo_target   Buffalo
+    print(itemData.name,itemData.label)     --> lock_door           Lock Door
+  end
+
+  target.addModel('my_buffalo_target', 'Buffalo', 'fas fa-car', GetHashKey('buffalo'), 10.0, onInteract, {
+    {
+      name = 'lock_door',
+      label = 'Lock Door'
+    }
+  },{
+    foo = 'bar'
+  })
+```
+
+### models
+```lua
+  -- NOTE: This example uses a single function callback for the entire target
+
+  function onInteract(targetData,itemData)
+    print(targetData.name,targetData.label) --> my_cars_target   Cars
+    print(itemData.name,itemData.label)     --> lock_door        Lock Door
+  end
+
+  local models = {
+    GetHashKey('buffalo'),  -- can use model hash
+    'bati',                 -- or use model name
+    'sanchez'
+  }
+
+  -- NOTE: 
+  -- addModels is a a shorthand call for repeated `addModel` calls.
+  -- as a result, unique ID's will be generated for each successive call.
+  -- cache all "true" target ID's in the return value of the target.addModels function call.
+  -- this example is synonymous with all other non-singular target definition functions, e.g:
+  -- `addModelBones`, `addLocalEntBones`, `addNetEntBones`.
+  local targetIds = target.addModels('my_cars_target', 'Cars', 'fas fa-car', models, 10.0, onInteract, {
+    {
+      name = 'lock_door',
+      label = 'Lock Door'
+    }
+  },{
+    foo = 'bar'
+  })
+
+  -- unpack targetIds to remove
+  target.removeTarget(table.unpack(targetIds))
+
+  -- OR iterate to remove (bad)
+  for _,tid in ipairs(targetIds) do
+    target.removeTarget(tid)
+  end
+  -- 
+```
 
 ### netEnt
 ```lua
@@ -534,35 +620,7 @@ anything    - any                 (literally any other data you want to pass thr
   })
 ```
 
-### vehicle
-```lua
-onSelect = function(targetData, itemData)
-  print(targetData.name,targetData.label) --> vehicle  Vehicle
-    print(itemData.name,itemData.label)   --> blow_up  Blow Up
-end
-
--- without vars, resource and canInteract
-exports["meta_target"]:addVehicle("vehicle", "Vehicle", "fas fa-car", 2.5, onSelect, {
-  {
-    name = "blow_up",
-    label = "Blow Up"
-  }
-})
-
--- with vars, resource, canInteract
-exports["meta_target"]:addVehicle("vehicle", "Vehicle", "fas fa-car", 2.5, onSelect, {
-  {
-    name = "blow_up",
-    label = "Blow Up"
-  }
-}, {
-  foo = "bar"
-}, GetCurrentResourceName(), function(target,pos,ent,endPos,modelHash,isNetworked,netId,targetDist,entityType)
-  return true
-end)
-```
-
 ### remove
 ```lua
-  target.removeTarget('pinkcage_target')
+  target.remove('pinkcage_target')
 ```

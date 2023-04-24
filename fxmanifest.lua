@@ -18,7 +18,6 @@ client_scripts {
   'client/s2w.lua',
   'client/main.lua',
   'client/compat/*.lua',
-  --'client/examples.lua',
 }
 
 files {

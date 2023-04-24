@@ -1,3 +1,4 @@
+---@diagnostic disable: redundant-parameter
 local exportPrefix = 'bt-target'
 
 local function getExportEventName(name)

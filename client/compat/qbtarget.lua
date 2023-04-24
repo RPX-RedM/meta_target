@@ -1,3 +1,5 @@
+---@diagnostic disable: redundant-parameter
+
 local exportPrefix = 'qb-target'
 
 local function getExportEventName(name)
@@ -78,7 +80,7 @@ local exports = {
       end
     end
 
-    return mTarget.addInternalPoly(name,targetOptions.title or targetOptions.options[1].label or name:upper(),targetOptions.options[1].icon,points,options,targetOptions.distance or false,targetOptions.options[1].action and NewFunction or false,items,{},GetInvokingResource(),targetOptions.canShow)
+    return mTarget.addInternalPoly(name,targetOptions.title or targetOptions.options[1].label or name:upper(),targetOptions.options[1].icon,zones,options,targetOptions.distance or false,targetOptions.options[1].action and NewFunction or false,items,{},GetInvokingResource(),targetOptions.canShow)
   end,
 
   AddEntityZone = function(name,entity,options,targetOptions)
@@ -258,18 +260,6 @@ local exports = {
     return mTarget.addPlayer(name,targetOptions.title or targetOptions.options[1].label or name:upper(),targetOptions.options[1].icon,targetOptions.distance or false,targetOptions.options[1].action and NewFunction or false,items,{},GetInvokingResource(),targetOptions.canShow)
   end,               
 
-  RaycastCamera = function(flag, playerCoords)
-    local hit,endPos,entityHit = s2w.get(flag or -1,playerPed,0)
-    local distance = #(endPos - (playerCoords or GetEntityCoords(playerPed)))
-    local entityType = entityHit and GetEntityType(entityHit)
-
-    if entityType == 0 and pcall(GetEntityModel, entityHit) then
-      entityType = 3
-    end
-
-    return endPos, distance, entityHit, entityType or 0
-  end,
-  
   RemoveZone = function(name)
     return mTarget.removeTarget(name)
   end,
