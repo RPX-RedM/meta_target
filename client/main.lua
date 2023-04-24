@@ -417,8 +417,26 @@ Citizen.CreateThread(function()
 		if isOpen then
 			DisableControlAction(0,control)      
 			DisableControlAction(0,revealControl)
-			DisableControlAction(0,0x0F39B3D4)
+			DisableControlAction(0, 0x0F39B3D4)
 			DisableControlAction(0, 0xF84FA74F)
+
+			-- All right click control actions
+			DisableControlAction(0, 0x53296B75)
+			DisableControlAction(0, 0x6328239B)
+			DisableControlAction(0, 0xBE1F4699)
+			DisableControlAction(0, 0xC13A6564)
+			DisableControlAction(0, 0xF84FA74F)
+			DisableControlAction(0, 0xF8982F00)
+			DisableControlAction(0, 0x04FB8191)
+			DisableControlAction(0, 0x1E7D7275)
+			DisableControlAction(0, 0x27568539)
+			DisableControlAction(0, 0x61470051)
+			DisableControlAction(0, 0x6777B840)
+			DisableControlAction(0, 0x92F5F01E)
+			DisableControlAction(0, 0xBDD5830D)
+			DisableControlAction(0, 0xD7CAFCEF)
+			DisableControlAction(0, 0xEE2804D0)
+
 			DisablePlayerFiring(PlayerPedId(), true)
 			checkActiveTargets()
 
